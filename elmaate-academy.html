@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>إلمات أكاديمي | Elmaate Academy</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ===================== CSS VARIABLES ===================== */
+    :root {
+      --black:       #0a0a0a;
+      --black-soft:  #111111;
+      --black-card:  #161616;
+      --gold:        #c9a84c;
+      --gold-light:  #e2c47a;
+      --gold-dim:    #8a6f32;
+      --white:       #f5f5f5;
+      --white-dim:   #aaaaaa;
+      --border:      rgba(201, 168, 76, 0.18);
+      --font-ar:     'Cairo', sans-serif;
+      --font-en:     'Open Sans', sans-serif;
+      --radius:      14px;
+      --transition:  0.3s ease;
+    }
+
+    /* ===================== RESET & BASE ===================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--font-ar);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img { max-width: 100%; display: block; }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ===================== TYPOGRAPHY HELPERS ===================== */
+    .ar { font-family: var(--font-ar); }
+    .en {
+      font-family: var(--font-en);
+      color: var(--white-dim);
+      letter-spacing: 0.03em;
+    }
+
+    /* ===================== LAYOUT HELPERS ===================== */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    section { padding: 90px 0; }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+    .section-title h2 {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.3;
+    }
+    .section-title .en-sub {
+      font-family: var(--font-en);
+      font-size: clamp(0.75rem, 2vw, 0.95rem);
+      font-weight: 300;
+      color: var(--white-dim);
+      margin-top: 6px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .gold-line {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      margin: 16px auto 0;
+    }
+
+    /* ===================== NAV ===================== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 999;
+      padding: 18px 0;
+      background: rgba(10,10,10,0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      transition: var(--transition);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+    .nav-logo span {
+      display: block;
+      font-family: var(--font-en);
+      font-size: 0.65rem;
+      font-weight: 300;
+      color: var(--white-dim);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+      align-items: center;
+    }
+    .nav-links a {
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: var(--white-dim);
+      transition: color var(--transition);
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta {
+      background: var(--gold);
+      color: var(--black) !important;
+      font-weight: 600 !important;
+      padding: 8px 20px;
+      border-radius: 6px;
+      transition: background var(--transition) !important;
+    }
+    .nav-cta:hover { background: var(--gold-light) !important; }
+
+    /* hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .hamburger span {
+      width: 24px;
+      height: 2px;
+      background: var(--gold);
+      border-radius: 2px;
+      transition: var(--transition);
+    }
+
+    /* ===================== HERO ===================== */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding-top: 100px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 50% 40%, rgba(201,168,76,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 80% 80%, rgba(201,168,76,0.04) 0%, transparent 60%);
+    }
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 40%, transparent 80%);
+      opacity: 0.4;
+    }
+    .hero-content { position: relative; z-index: 1; }
+    .hero-badge {
+      display: inline-block;
+      font-family: var(--font-en);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid var(--gold-dim);
+      padding: 6px 18px;
+      border-radius: 100px;
+      margin-bottom: 32px;
+    }
+    .hero-title {
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 10px;
+    }
+    .hero-title .gold { color: var(--gold); }
+    .hero-subtitle-en {
+      font-family: var(--font-en);
+      font-size: clamp(0.75rem, 2vw, 1rem);
+      font-weight: 300;
+      color: var(--white-dim);
+      letter-spacing: 0.1em;
+      margin-bottom: 28px;
+      text-transform: uppercase;
+    }
+    .hero-text-ar {
+      font-size: clamp(1rem, 3vw, 1.35rem);
+      font-weight: 400;
+      color: var(--white-dim);
+      max-width: 560px;
+      margin: 0 auto 10px;
+    }
+    .hero-text-en {
+      font-family: var(--font-en);
+      font-size: clamp(0.8rem, 2vw, 0.9rem);
+      font-weight: 300;
+      color: #777;
+      max-width: 500px;
+      margin: 0 auto 44px;
+    }
+    .hero-cta {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--black);
+      font-weight: 700;
+      font-size: 1.05rem;
+      padding: 16px 44px;
+      border-radius: 8px;
+      transition: background var(--transition), transform var(--transition);
+    }
+    .hero-cta:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+    }
+
+    /* scroll indicator */
+    .scroll-hint {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      opacity: 0.4;
+      animation: bounce 2s ease-in-out infinite;
+    }
+    .scroll-hint span {
+      font-family: var(--font-en);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .scroll-arrow {
+      width: 1px;
+      height: 36px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(8px); }
+    }
+
+    /* ===================== RESULTS SLIDER ===================== */
+    #results { background: var(--black-soft); }
+
+    .slider-wrapper {
+      position: relative;
+      overflow: hidden;
+    }
+    .slider-track {
+      display: flex;
+      gap: 20px;
+      transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      will-change: transform;
+      cursor: grab;
+      user-select: none;
+    }
+    .slider-track:active { cursor: grabbing; }
+
+    .result-card {
+      flex: 0 0 300px;
+      height: 420px;
+      background: var(--black-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+      transition: border-color var(--transition), transform var(--transition);
+    }
+    .result-card:hover {
+      border-color: var(--gold-dim);
+      transform: translateY(-4px);
+    }
+    /* Placeholder image area — replace src with real screenshots */
+    .result-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .result-placeholder {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #1a1a1a 0%, #111 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 24px;
+      text-align: center;
+    }
+    .result-placeholder .icon {
+      width: 56px;
+      height: 56px;
+      border: 1px solid var(--gold-dim);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      font-size: 1.5rem;
+    }
+    .result-placeholder p {
+      font-family: var(--font-en);
+      font-size: 0.8rem;
+      color: #444;
+      line-height: 1.5;
+    }
+    .result-label {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 12px 16px;
+      background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+      font-size: 0.85rem;
+      color: var(--gold-light);
+    }
+
+    /* slider controls */
+    .slider-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 32px;
+    }
+    .slider-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--black-card);
+      color: var(--gold);
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: border-color var(--transition), background var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .slider-btn:hover { border-color: var(--gold); background: rgba(201,168,76,0.1); }
+    .slider-dots {
+      display: flex;
+      gap: 8px;
+    }
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #333;
+      transition: background var(--transition), width var(--transition);
+    }
+    .dot.active {
+      background: var(--gold);
+      width: 22px;
+      border-radius: 3px;
+    }
+
+    /* ===================== REGISTRATION ===================== */
+    #register { background: var(--black); }
+
+    .register-box {
+      max-width: 540px;
+      margin: 0 auto;
+      background: var(--black-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 52px 44px;
+      text-align: center;
+    }
+    .register-box h2 {
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 32px;
+    }
+    .form-group {
+      margin-bottom: 18px;
+      text-align: right;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--white-dim);
+      margin-bottom: 8px;
+    }
+    .form-group input {
+      width: 100%;
+      background: #0d0d0d;
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 10px;
+      padding: 14px 18px;
+      font-family: var(--font-ar);
+      font-size: 1rem;
+      color: var(--white);
+      outline: none;
+      transition: border-color var(--transition);
+      direction: rtl;
+    }
+    .form-group input:focus { border-color: var(--gold); }
+    .form-group input::placeholder { color: #444; }
+
+    .limited-note {
+      font-size: 0.82rem;
+      color: var(--gold-dim);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .limited-note::before {
+      content: '●';
+      color: var(--gold);
+      font-size: 0.5rem;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.3; }
+    }
+
+    .submit-btn {
+      width: 100%;
+      background: var(--gold);
+      color: var(--black);
+      font-family: var(--font-ar);
+      font-size: 1.1rem;
+      font-weight: 700;
+      padding: 16px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background var(--transition), transform var(--transition);
+    }
+    .submit-btn:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+    }
+
+    /* ===================== REVIEWS ===================== */
+    #reviews { background: var(--black-soft); }
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .review-card {
+      background: var(--black-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px 28px;
+      transition: border-color var(--transition), transform var(--transition);
+    }
+    .review-card:hover {
+      border-color: var(--gold-dim);
+      transform: translateY(-4px);
+    }
+    .review-stars {
+      color: var(--gold);
+      font-size: 1rem;
+      margin-bottom: 16px;
+      letter-spacing: 3px;
+    }
+    .review-text {
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: #ccc;
+      line-height: 1.8;
+      margin-bottom: 24px;
+    }
+    .reviewer {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .reviewer-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold-dim), #1a1a1a);
+      border: 1px solid var(--gold-dim);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      color: var(--gold);
+    }
+    .reviewer-info .name {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+    .reviewer-info .role {
+      font-family: var(--font-en);
+      font-size: 0.72rem;
+      color: #555;
+    }
+
+    /* ===================== ABOUT ===================== */
+    #about { background: var(--black); }
+
+    .about-inner {
+      max-width: 740px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .about-inner p {
+      font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+      font-weight: 400;
+      color: #bbb;
+      line-height: 2;
+    }
+    .about-stats {
+      display: flex;
+      justify-content: center;
+      gap: 56px;
+      margin-top: 52px;
+      flex-wrap: wrap;
+    }
+    .stat {
+      text-align: center;
+    }
+    .stat-number {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 900;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--white-dim);
+      margin-top: 6px;
+    }
+
+    /* ===================== CONTACT / FOOTER ===================== */
+    #contact {
+      background: var(--black-soft);
+      padding: 70px 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+    #contact .section-title { margin-bottom: 36px; }
+    .instagram-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--black-card);
+      border: 1px solid var(--border);
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--gold);
+      transition: border-color var(--transition), background var(--transition);
+    }
+    .instagram-link:hover {
+      border-color: var(--gold);
+      background: rgba(201,168,76,0.07);
+    }
+    .instagram-link svg {
+      width: 22px;
+      height: 22px;
+      fill: var(--gold);
+    }
+
+    .footer-bottom {
+      margin-top: 48px;
+      font-family: var(--font-en);
+      font-size: 0.72rem;
+      color: #333;
+      letter-spacing: 0.08em;
+    }
+
+    /* ===================== MOBILE MENU ===================== */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        position: fixed;
+        top: 64px; left: 0; right: 0;
+        background: rgba(10,10,10,0.97);
+        flex-direction: column;
+        padding: 24px;
+        gap: 20px;
+        border-bottom: 1px solid var(--border);
+      }
+      .nav-links.open { display: flex; }
+      .hamburger { display: flex; }
+
+      section { padding: 70px 0; }
+      .register-box { padding: 36px 24px; }
+      .about-stats { gap: 36px; }
+
+      .result-card { flex: 0 0 260px; height: 360px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===================== NAV ===================== -->
+  <nav>
+    <div class="container nav-inner">
+      <div class="nav-logo">
+        إلمات أكاديمي
+        <span>Elmaate Academy</span>
+      </div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#results">نتائج الطلاب</a></li>
+        <li><a href="#reviews">آراء الطلاب</a></li>
+        <li><a href="#about">من نحن</a></li>
+        <li><a href="#register" class="nav-cta">احجز مكانك</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===================== HERO ===================== -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <div class="hero-badge">Trading Academy · أكاديمية التداول</div>
+      <h1 class="hero-title">
+        إلمات <span class="gold">أكاديمي</span>
+      </h1>
+      <p class="hero-subtitle-en">Elmaate Academy</p>
+      <p class="hero-text-ar">تعلم التداول بطريقة عملية ومنظمة</p>
+      <p class="hero-text-en">Learn trading with structure and practical experience</p>
+      <a href="#register" class="hero-cta">احجز مكانك الآن</a>
+    </div>
+    <div class="scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- ===================== RESULTS ===================== -->
+  <section id="results">
+    <div class="container">
+      <div class="section-title">
+        <h2>نتائج الطلاب</h2>
+        <p class="en-sub">Student Results</p>
+        <div class="gold-line"></div>
+      </div>
+
+      <div class="slider-wrapper">
+        <div class="slider-track" id="sliderTrack">
+
+          <!-- ===== RESULT CARDS =====
+               To add a real screenshot, replace the entire <div class="result-placeholder">
+               block inside a result-card with:
+               <img class="result-img" src="YOUR_IMAGE.jpg" alt="نتيجة طالب">
+               ======================== -->
+
+          <div class="result-card">
+            <div class="result-placeholder">
+              <div class="icon">📈</div>
+              <!-- REPLACE: add screenshot image here -->
+              <p>ضع صورة النتيجة هنا<br>Add result screenshot here</p>
+            </div>
+            <div class="result-label">نتيجة طالب #1</div>
+          </div>
+
+          <div class="result-card">
+            <div class="result-placeholder">
+              <div class="icon">💹</div>
+              <p>ضع صورة النتيجة هنا<br>Add result screenshot here</p>
+            </div>
+            <div class="result-label">نتيجة طالب #2</div>
+          </div>
+
+          <div class="result-card">
+            <div class="result-placeholder">
+              <div class="icon">📊</div>
+              <p>ضع صورة النتيجة هنا<br>Add result screenshot here</p>
+            </div>
+            <div class="result-label">نتيجة طالب #3</div>
+          </div>
+
+          <div class="result-card">
+            <div class="result-placeholder">
+              <div class="icon">🏆</div>
+              <p>ضع صورة النتيجة هنا<br>Add result screenshot here</p>
+            </div>
+            <div class="result-label">نتيجة طالب #4</div>
+          </div>
+
+          <div class="result-card">
+            <div class="result-placeholder">
+              <div class="icon">🎯</div>
+              <p>ضع صورة النتيجة هنا<br>Add result screenshot here</p>
+            </div>
+            <div class="result-label">نتيجة طالب #5</div>
+          </div>
+
+        </div><!-- /slider-track -->
+      </div><!-- /slider-wrapper -->
+
+      <div class="slider-controls">
+        <button class="slider-btn" id="prevBtn" aria-label="السابق">&#8250;</button>
+        <div class="slider-dots" id="sliderDots"></div>
+        <button class="slider-btn" id="nextBtn" aria-label="التالي">&#8249;</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================== REGISTRATION ===================== -->
+  <section id="register">
+    <div class="container">
+      <div class="register-box">
+        <h2>احجز مكانك الآن</h2>
+
+        <div class="form-group">
+          <label for="fullName">الاسم الكامل</label>
+          <input type="text" id="fullName" placeholder="أدخل اسمك الكامل" />
+        </div>
+
+        <div class="form-group">
+          <label for="whatsapp">رقم الواتساب</label>
+          <input type="tel" id="whatsapp" placeholder="أدخل رقم الواتساب" />
+        </div>
+
+        <p class="limited-note">الأماكن محدودة</p>
+
+        <button class="submit-btn" onclick="openWhatsApp()">احجز مكانك</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== REVIEWS ===================== -->
+  <section id="reviews">
+    <div class="container">
+      <div class="section-title">
+        <h2>آراء الطلاب</h2>
+        <p class="en-sub">Student Reviews</p>
+        <div class="gold-line"></div>
+      </div>
+
+      <div class="reviews-grid">
+
+        <!-- ===== REVIEW CARDS =====
+             To edit a review: change the text inside <p class="review-text">
+             Change the name inside <div class="name"> and role inside <div class="role">
+             ======================== -->
+
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">
+            <!-- EDIT: أضف رأي الطالب هنا -->
+            أضف هنا رأي الطالب الأول — يمكنك تغيير هذا النص بسهولة.
+          </p>
+          <div class="reviewer">
+            <div class="reviewer-avatar">ط</div>
+            <div class="reviewer-info">
+              <div class="name">اسم الطالب</div><!-- EDIT -->
+              <div class="role">Student</div><!-- EDIT -->
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">
+            أضف هنا رأي الطالب الثاني — يمكنك تغيير هذا النص بسهولة.
+          </p>
+          <div class="reviewer">
+            <div class="reviewer-avatar">ط</div>
+            <div class="reviewer-info">
+              <div class="name">اسم الطالب</div>
+              <div class="role">Student</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">
+            أضف هنا رأي الطالب الثالث — يمكنك تغيير هذا النص بسهولة.
+          </p>
+          <div class="reviewer">
+            <div class="reviewer-avatar">ط</div>
+            <div class="reviewer-info">
+              <div class="name">اسم الطالب</div>
+              <div class="role">Student</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ABOUT ===================== -->
+  <section id="about">
+    <div class="container">
+      <div class="section-title">
+        <h2>من نحن</h2>
+        <p class="en-sub">About Us</p>
+        <div class="gold-line"></div>
+      </div>
+      <div class="about-inner">
+        <!-- EDIT: غيّر هذا النص ليناسب وصف الأكاديمية -->
+        <p>
+          إلمات أكاديمي هي أكاديمية متخصصة في تعليم التداول بأسلوب عملي ومنهجي.
+          نؤمن بأن النجاح في الأسواق المالية يبدأ بتأسيس صحيح وفهم عميق للأساسيات.
+          نهدف إلى تخريج متداولين واعين قادرين على اتخاذ قرارات مدروسة واحترافية.
+        </p>
+
+        <div class="about-stats">
+          <div class="stat">
+            <!-- EDIT: غيّر الأرقام -->
+            <div class="stat-number">+100</div>
+            <div class="stat-label">طالب متخرج</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">+50</div>
+            <div class="stat-label">نتيجة موثقة</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">2+</div>
+            <div class="stat-label">سنوات خبرة</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CONTACT ===================== -->
+  <section id="contact">
+    <div class="container">
+      <div class="section-title">
+        <h2>تواصل معنا</h2>
+        <p class="en-sub">Contact</p>
+        <div class="gold-line"></div>
+      </div>
+
+      <a
+        href="https://www.instagram.com/el_maate/?hl=ar"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="instagram-link"
+      >
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+        </svg>
+        el_maate@
+      </a>
+
+      <p class="footer-bottom">
+        © 2025 Elmaate Academy · جميع الحقوق محفوظة
+      </p>
+    </div>
+  </section>
+
+  <!-- ===================== JAVASCRIPT ===================== -->
+  <script>
+    /* ---- NAV MENU ---- */
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('open');
+    }
+    // close on link click
+    document.querySelectorAll('.nav-links a').forEach(a => {
+      a.addEventListener('click', () => {
+        document.getElementById('navLinks').classList.remove('open');
+      });
+    });
+
+    /* ---- SLIDER ---- */
+    const track  = document.getElementById('sliderTrack');
+    const cards  = track.querySelectorAll('.result-card');
+    const dotsEl = document.getElementById('sliderDots');
+    const total  = cards.length;
+    let current  = 0;
+
+    // build dots
+    cards.forEach((_, i) => {
+      const d = document.createElement('div');
+      d.className = 'dot' + (i === 0 ? ' active' : '');
+      d.onclick = () => goTo(i);
+      dotsEl.appendChild(d);
+    });
+
+    function getCardWidth() {
+      return cards[0].offsetWidth + 20; // card + gap
+    }
+
+    function goTo(idx) {
+      // clamp
+      idx = Math.max(0, Math.min(idx, total - 1));
+      current = idx;
+      track.style.transform = `translateX(${current * getCardWidth()}px)`;
+      document.querySelectorAll('.dot').forEach((d, i) => {
+        d.classList.toggle('active', i === current);
+      });
+    }
+
+    document.getElementById('prevBtn').onclick = () => goTo(current - 1);
+    document.getElementById('nextBtn').onclick = () => goTo(current + 1);
+
+    // touch / drag
+    let startX = 0, isDragging = false;
+    track.addEventListener('mousedown',  e => { isDragging = true; startX = e.clientX; });
+    track.addEventListener('touchstart', e => { isDragging = true; startX = e.touches[0].clientX; }, { passive: true });
+    track.addEventListener('mousemove',  e => { if (isDragging) e.preventDefault(); });
+    track.addEventListener('mouseup',    e => {
+      if (!isDragging) return;
+      isDragging = false;
+      const diff = startX - e.clientX;
+      if (Math.abs(diff) > 40) goTo(diff > 0 ? current + 1 : current - 1);
+    });
+    track.addEventListener('touchend', e => {
+      if (!isDragging) return;
+      isDragging = false;
+      const diff = startX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 40) goTo(diff > 0 ? current + 1 : current - 1);
+    });
+
+    // auto-advance
+    setInterval(() => goTo(current + 1 < total ? current + 1 : 0), 4500);
+
+    /* ---- WHATSAPP BUTTON ---- */
+    function openWhatsApp() {
+      const name = document.getElementById('fullName').value.trim();
+      const wa   = document.getElementById('whatsapp').value.trim();
+
+      if (!name || !wa) {
+        alert('يرجى ملء جميع الحقول');
+        return;
+      }
+
+      // ===== EDIT: ضع رقم الواتساب الخاص بك هنا (مع رمز الدولة، بدون + أو صفر) =====
+      const ACADEMY_WHATSAPP = '212600000000'; // <-- غيّر هذا الرقم
+
+      const msg = encodeURIComponent(
+        `السلام عليكم، أريد حجز مكاني في إلمات أكاديمي\nالاسم: ${name}\nالواتساب: ${wa}`
+      );
+      window.open(`https://wa.me/${ACADEMY_WHATSAPP}?text=${msg}`, '_blank');
+    }
+
+    /* ---- SCROLL NAV SHADOW ---- */
+    window.addEventListener('scroll', () => {
+      const nav = document.querySelector('nav');
+      nav.style.boxShadow = window.scrollY > 30
+        ? '0 4px 30px rgba(0,0,0,0.6)'
+        : 'none';
+    });
+  </script>
+
+</body>
+</html>
